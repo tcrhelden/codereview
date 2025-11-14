@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>AI Code Reviewer Upload</title>
+<style>
+body{font-family:sans-serif;margin:40px;}
+input[type=file]{margin-bottom:10px;}
+.review-block{margin-bottom:20px;padding:10px;border:1px solid #ccc;background:#f9f9f9;}
+pre{background:#eee;padding:10px;overflow-x:auto;}
+</style>
+</head>
+<body>
+<h1>Upload codebestanden voor review</h1>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+<input type="file" name="files" multiple accept=".js,.ts,.py,.java,.cpp,.cs">
+<button type="submit">Review bestanden</button>
+</form>
+
+<% if(results) { %>
+<h2>Resultaten:</h2>
+<p>JSON rapport: <%= reportPath %></p>
+<% results.forEach(r => { %>
+<div class="review-block">
+<p><strong>Bestand:</strong> <%= r.file %></p>
+<p><strong>Fixed bestand:</strong> <%= r.fixedFile || "Geen fixed file" %></p>
+<pre><%= r.review %></pre>
+</div>
+<% }) %>
+<% } %>
+
+</body>
+</html>
